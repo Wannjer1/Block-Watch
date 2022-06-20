@@ -1,3 +1,4 @@
+from pyexpat import model
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
@@ -62,6 +63,16 @@ class Business(models.Model):
         business = Business.objects.filter(self=business)
         return business
 
-  
+# neighbourhood model
+class NeighbourHood(models.Model):
+    title = models.CharField(max_length=255,null=True, blank=True)
+    description = models.TextField(max_length=255,null=True, blank=True)
+    location = models.CharField(max_length=150, verbose_name='Neighbourhood Location', null=True, blank=True)
+    neighbourhood_logo =  models.ImageField(upload_to = 'post_img/')
+    neighbourhood_admin = models.ForeignKey(User, on_delete=models.CASCADE)
+    health_department = models.CharField(max_length=15, null=True, blank=True)
+    police_department = models.CharField(max_length=15, null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+
 
     
