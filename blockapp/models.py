@@ -90,9 +90,9 @@ class Business(models.Model):
         '''Method to delete businesses'''
         self.delete()
 
-    def update_business(self):
-        '''Method to update businesses'''
-        self.update()
+    def update_business(self, id, name, description, email, neighbourhood):
+        update = NeighbourHood.objects.filter(id = id).update(name = name , description = description, email = email, neighbourhood = neighbourhood)
+        return update
 
     def find_business(self, business_id):
         business = Business.objects.filter(self=business)
