@@ -40,18 +40,30 @@ def MyNeighbourhoods(request):
 
 # funtion to create a new post
 def new_post(request):
-    current_user = request.user
-    if request.method == 'POST':
-        form = NewPostForm(request.POST, request.FILES)
+    
+    if request.method == "POST":
+        form = NewPostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.user = current_user
-            post.save()
-        return redirect('home')
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+            neighbourhood = form.cleaned_data['neighbourhood']
+           
 
+            neighbourhood_obj = NeighbourHood.objects.get(pk=int(neighbourhood))
+            new_post = Post(title = title, neighbourhood = neighbourhood_obj, description = description)
+            new_post.save()
+
+            messages.success(request, '✅ Your Post Was Created Successfully!')
+            return redirect('MyPosts')
+
+        else:
+    
+            messages.error(request, "Your Post Wasn't Created!")
+            return redirect('AddPost')
     else:
         form = NewPostForm()
-    return render(request, 'blockapp/addpost.html', {'form': form,'current_user': current_user}) 
+    return render(request, 'blockapp/addpost.html', {'form':form})
+
 
 # function to view users posts 
 def MyPosts(request):
@@ -72,10 +84,15 @@ def AddBusiness(request):
             description = form.cleaned_data['description']
 
             neighbourhood_obj = NeighbourHood.objects.get(pk=int(neighbourhood))
+            new_business = Business(name = name, email = email, neighbourhood = neighbourhood_obj, description = description)
+            new_business.save()
+
+            messages.success(request, '✅ A Business Was Created Successfully!')
+            return redirect('MyBusinesses')
 
         else:
             messages.error(request, "A Business Wasn't Created!")
-            return redirect('home')
+            return redirect('AddBusiness')
 
     else:
         form = BusinessForm()
