@@ -28,6 +28,7 @@ class Post(models.Model):
     def save_post(self):
         self.save()
 
+
 # business model
 class Business(models.Model):
     name = models.CharField(max_length=50)
