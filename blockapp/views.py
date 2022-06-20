@@ -8,7 +8,7 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Trial url page for pair grouping. I am suppsed to work on the models.user stories 3,4,5")
+    return render(request, 'blockapp/index.html')
 
 
 # function to add neighbourhood
@@ -42,7 +42,7 @@ def new_post(request):
 
     else:
         form = NewPostForm()
-    return render(request, 'blockapp/posts.html', {'form': form,'current_user': current_user}) 
+    return render(request, 'blockapp/addpost.html', {'form': form,'current_user': current_user}) 
 
 # function to add business
 def AddBusiness(request):
@@ -59,9 +59,9 @@ def AddBusiness(request):
 
         else:
             messages.error(request, "A Business Wasn't Created!")
-            return redirect('urlpageforbusinessform')
+            return redirect('home')
 
     else:
         form = BusinessForm()
     
-    return render(request, 'templateforbusinessform.html', {'form': form,})
+    return render(request, 'blockapp/addbiz.html', {'form': form,})
