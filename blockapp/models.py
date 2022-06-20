@@ -22,6 +22,9 @@ class Post(models.Model):
     post_date = models.DateTimeField(auto_now_add=True, null=True)
     # rememeber to add profile foreign key
 
+    def __str__(self):
+        return str(self.title)
+
     def save_post(self):
         self.save()
 
