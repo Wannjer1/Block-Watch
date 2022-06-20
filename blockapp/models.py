@@ -1,4 +1,5 @@
 from pyexpat import model
+from tkinter import N
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
@@ -73,6 +74,25 @@ class NeighbourHood(models.Model):
     health_department = models.CharField(max_length=15, null=True, blank=True)
     police_department = models.CharField(max_length=15, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.title)
+
+    def get_neighbourhood(self):
+        neighbourhoods = NeighbourHood.objects.all()
+        return neighbourhoods
+
+    def create_neighbourhod(self):
+        self.save()
+
+    def delete_neighbourhood(self):
+        self.delete()
+
+    def update_neighborhood(self, id, title, location, county, neighbourhood_logo):
+        update = NeighbourHood.objects.filter(id = id).update(title = title , location = location, neighbourhood_logo = neighbourhood_logo)
+        return update
+
+    
 
 
     
