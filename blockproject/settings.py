@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'blockproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blockwatch',
+        'USER': 'wanjeri',
+        'PASSWORD': 'pass123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
