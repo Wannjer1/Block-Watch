@@ -6,9 +6,9 @@ from . import views
 urlpatterns = [
     path('',views.home, name='home'),
     # url path to add business, post,neighbourhood forms
-    path('<str:username>/add/business/', views.AddBusiness, name='AddBusiness'),
-    path('<str:username>/add/neighbourhood/', views.AddNeighbourhood, name='AddNeighbourhood'),
-    path('<str:username>/add/post/', views.new_post, name='AddPost'),
+    path('add/business/', views.AddBusiness, name='AddBusiness'),
+    path('/add/neighbourhood/', views.AddNeighbourhood, name='AddNeighbourhood'),
+    path('/add/post/', views.new_post, name='AddPost'),
 
    
 ]
