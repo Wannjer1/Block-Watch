@@ -55,8 +55,8 @@ def new_post(request):
 
 # function to view users posts 
 def MyPosts(request):
-    posts = Post.objects.filter.all()
-    return render(request, 'blockapp/posts.html', {'posts':posts})
+    posts = Post.objects.all()
+    return render(request, 'blockapp/post.html', {'posts':posts})
 
 
 # function to add business
@@ -86,7 +86,7 @@ def AddBusiness(request):
 def MyBusinesses(request):
 #    remember to link this with the user profile
   
-    businesses = Business.objects.filter.all()
+    businesses = Business.objects.all()
     return render(request, 'blockapp/business.html', {'businesses':businesses})
 
 # function to enable users search for posted businesses
