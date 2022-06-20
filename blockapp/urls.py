@@ -7,8 +7,11 @@ urlpatterns = [
     path('',views.home, name='home'),
     # url path to add business, post,neighbourhood forms
     path('add/business/', views.AddBusiness, name='AddBusiness'),
-    path('/add/neighbourhood/', views.AddNeighbourhood, name='AddNeighbourhood'),
-    path('/add/post/', views.new_post, name='AddPost'),
+    path('add/neighbourhood/', views.AddNeighbourhood, name='AddNeighbourhood'),
+    path('add/post/', views.new_post, name='AddPost'),
+    # path to form output
+    
+
 
    
 ]
