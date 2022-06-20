@@ -1,5 +1,5 @@
-{% load bootstrap4 %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% load static %} {% load bootstrap4 %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light container-fluid">
   <a class="navbar-brand" href="/">BlockWatch</a>
   <button
     class="navbar-toggler"
@@ -16,7 +16,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/"
+        <a class="nav-link" href="{% url 'home' %}"
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
@@ -35,5 +35,16 @@
         Search
       </button>
     </form>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'AddBusiness'  %}">B</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'AddNeighbourhood'  %}">N</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'AddPost'  %}">P</a>
+      </li>
+    </ul>
   </div>
 </nav>
