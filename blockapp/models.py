@@ -1,6 +1,4 @@
-from pyexpat import model
-from tkinter import N
-from unicodedata import category
+
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -21,7 +19,7 @@ CHOICES = [
 class NeighbourHood(models.Model):
     title = models.CharField(max_length=255,null=True, blank=True)
     description = models.TextField(max_length=255,null=True, blank=True)
-    location = models.CharField(max_length=150, verbose_name='Neighbourhood Location', null=True, blank=True)
+    location = models.CharField(max_length=150,  null=True, blank=True)
     neighbourhood_logo =  models.ImageField(upload_to = 'post_img/')
     neighbourhood_admin = models.ForeignKey(User, on_delete=models.CASCADE)
     health_department = models.CharField(max_length=15, null=True, blank=True)
@@ -55,6 +53,7 @@ class Post(models.Model):
     category = models.CharField(max_length=255,choices=CHOICES)
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     post_date = models.DateTimeField(auto_now_add=True, null=True)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null=True)
     # rememeber to add profile foreign key
 
     def __str__(self):
@@ -71,7 +70,7 @@ class Business(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True) 
     email = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True, null=True)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null=True)
     # REMEMBER TO ADD PROFILE FIELD
 
     def __str__(self):
@@ -95,7 +94,7 @@ class Business(models.Model):
         return update
 
     def find_business(self, business_id):
-        business = Business.objects.filter(self=business)
+        business = Business.objects.filter(self=business_id)
         return business
 
 
