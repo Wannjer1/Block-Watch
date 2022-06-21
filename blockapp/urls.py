@@ -16,6 +16,8 @@ urlpatterns = [
     path('businesses/', views.MyBusinesses, name='MyBusinesses'),
     # search business path
     path('search', views.Search, name="Search"),
+    # path to view individual neighbourhoods
+    path('neighbourhood/<str:title>/', views.SingleNeighbourhood, name='SingleNeighbourhood'),
 
 
    

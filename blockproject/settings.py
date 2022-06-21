@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     # local apps
     'blockapp',
     'bootstrap4',
-    'fontawesomefree',
-    'crispy_forms',
+   
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

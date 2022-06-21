@@ -1,6 +1,6 @@
 
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import *
 from .forms import *
@@ -8,7 +8,8 @@ from django.contrib import messages
 
 # Create your views here.
 def home(request):
-    return render(request, 'blockapp/index.html')
+    neighbourhoods = NeighbourHood.objects.all()
+    return render(request, 'blockapp/index.html', {'neighbourhoods':neighbourhoods})
 
 
 # function to add neighbourhood
@@ -37,6 +38,14 @@ def MyNeighbourhoods(request):
         print(neighbourhood.title)
         print(neighbourhood.description)
     return render(request, 'blockapp/neighbourhoods.html', {'neighbourhoods':neighbourhoods})
+
+# function to render single/individual blocks
+def SingleNeighbourhood(request, title):
+    neighbourhood = get_object_or_404(NeighbourHood, title=title)
+    businesses = Business.objects.filter(neighbourhood = neighbourhood.id).all()
+    posts = Post.objects.filter(neighbourhood = neighbourhood.id).all()
+
+    return render(request, 'blockapp/singleblock.html', {'neighbourhood': neighbourhood, 'businesses':businesses, 'posts':posts})
 
 # funtion to create a new post
 def new_post(request):
