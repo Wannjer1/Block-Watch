@@ -27,6 +27,7 @@
         <a class="nav-link" href="/admin">Admin</a>
       </li>
     </ul>
+    {% if user.is_authenticated %}
     <div class="input-group searchbar">
       <form method="POST" action="{% url 'Search' %}" name="Search">
         {% csrf_token %}
@@ -41,16 +42,52 @@
         </div>
       </form>
     </div>
-    <ul class="navbar-nav mr-auto">
+
+     <div class="dropdown m-3">
+      <button
+        class="btn btn-primary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Hood Posts
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="nav-link" href="{% url 'AddBusiness'  %}">Business</a>
+      <a class="nav-link" href="{% url 'AddNeighbourhood' %}">Hoods</a>
+      <a class="nav-link" href="{% url 'AddPost'  %}">Post</a>
+        
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Profile
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Profile</a>
+        <a class="nav-link" href="{% url 'logout'  %}">Log Out</a>
+        
+      </div>
+    </div>
+    
+      {% else %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'AddBusiness'  %}">B</a>
+        <a class="nav-link" href="{% url 'login'  %}">Log In</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'AddNeighbourhood' %}">N</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'AddPost'  %}">P</a>
+        <a class="nav-link" href="{% url 'login'  %}">Sign Up</a>
       </li>
     </ul>
   </div>
+  {% endif %}
 </nav>

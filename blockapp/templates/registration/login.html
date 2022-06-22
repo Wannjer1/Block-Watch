@@ -1,0 +1,81 @@
+{% extends "base.html" %} {% load bootstrap4 %}
+
+
+{% block content %} 
+<!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="main-breadcrumb m-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">Log In to see your hood</a>
+      </li>
+    </ol>
+  </nav>
+  <!-- /Breadcrumb -->
+   {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %} {% if next %} {% if user.is_authenticated %}
+  <p>
+    Your account doesn't have access to this page. To proceed, please login with
+    an account that has access.
+  </p>
+  {% else %}
+  <p>Please login to see this page.</p>
+  {% endif %} {% endif %}
+
+  <form method="POST" enctype="multipart/form-data" style="margin-top: 50px" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="bio layout-spacing">
+      <div class="widget-content widget-content-area">
+        <div class="row m-auto">
+          
+          <div class="col-xl-12 col-lg-12 col-md-12 mt-md-0 mt-4">
+            <div class="form">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="fullName"
+                      >Username <span class="text-danger">*</span></label
+                    >
+                    {{ form.username }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="fullName"
+                      >Password <span class="text-danger">*</span></label
+                    >
+                    {{ form.password }}
+                  </div>
+                </div>
+              </div>
+              
+              
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg"
+                      style="margin-bottom: 10px"
+                       value="login"
+                    >
+                      Log In
+                    </button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% block footer %} {% endblock %}
+
+
+{% endblock%}

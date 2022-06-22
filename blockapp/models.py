@@ -25,6 +25,7 @@ class NeighbourHood(models.Model):
     health_department = models.CharField(max_length=15, null=True, blank=True)
     police_department = models.CharField(max_length=15, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    occupants = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.title)
@@ -97,5 +98,15 @@ class Business(models.Model):
         business = Business.objects.filter(self=business_id)
         return business
 
+# join neighbourhood 
+class Join(models.Model):
+	'''
+	Model that keeps track of what user has joined what neighbourhood
+	'''
+	user_id = models.OneToOneField(User,on_delete=models.CASCADE)
+	hood_id = models.ForeignKey(NeighbourHood,on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.user_id
 
     

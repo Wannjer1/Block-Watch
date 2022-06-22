@@ -17,6 +17,10 @@
   <h1 class="text-center" style="color:blue;">{{ neighbourhood.title }}</h1>
 
   <p class="card-text text-center">{{ neighbourhood.description }}</p>
+
+  
+                 
+   
   <div class="row">
     <div class="col-sm-6">
       <div class="card" style="margin-bottom: 30px">
@@ -40,60 +44,68 @@
     </div>
   </div>
 
-  {% if posts %}
-  <h5 class="py-4">
-    <b>Featured Posts</b> |
-    <span style="font-weight: lighter;color: blue;">{{ neighbourhood.title }}</span>
-  </h5>
-  <div class="row">
-    {% for post in posts %}
-    <div class="col-sm-6">
-      <div class="card" style="margin-bottom: 30px">
-         <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title"style="color:red;">{{ post.title }}</h5>
-          <p class="text-muted" style="font-size: small">
-            Neighbourhood:
-            <span class="text-dark"><b>{{ post.neighbourhood.title }}</b></span>
-          </p>
-          <hr>
-          <p class="card-text">{{ post.description|truncatewords:45 }}</p>
-          <hr />
+ <div>
+     <a href="/ ">
+                        <button class="btn btn-danger">Leave NeighbourHood</button>
+                    </a>
+ </div>
+ 
+
+    {% if posts %}
+    <h5 class="py-4">
+        <b>Featured Posts</b> |
+        <span style="font-weight: lighter;color: blue;">{{ neighbourhood.title }}</span>
+    </h5>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-sm-6">
+        <div class="card" style="margin-bottom: 30px">
+            <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title"style="color:red;">{{ post.title }}</h5>
+            <p class="text-muted" style="font-size: small">
+                Neighbourhood:
+                <span class="text-dark"><b>{{ post.neighbourhood.title }}</b></span>
+            </p>
+            <hr>
+            <p class="card-text">{{ post.description|truncatewords:45 }}</p>
+            <hr />
+            </div>
         </div>
-      </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  {% else %}
-  <div class="col-sm-12" style="margin-top: 20px">
-    <div class="content text-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="72"
-        height="72"
-        viewBox="0 0 24 24"
-        style="fill: rgba(0, 0, 0, 1)"
-      >
-        <path
-          d="M19.903 8.586a.997.997 0 0 0-.196-.293l-6-6a.997.997 0 0 0-.293-.196c-.03-.014-.062-.022-.094-.033a.991.991 0 0 0-.259-.051C13.04 2.011 13.021 2 13 2H6c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V9c0-.021-.011-.04-.013-.062a.952.952 0 0 0-.051-.259c-.01-.032-.019-.063-.033-.093zM16.586 8H14V5.414L16.586 8zM6 20V4h6v5a1 1 0 0 0 1 1h5l.002 10H6z"
-        ></path>
-        <path d="M8 12h8v2H8zm0 4h8v2H8zm0-8h2v2H8z"></path>
-      </svg>
-      <br />
-      <h4 class="text-dark py-3">No Associated Posts Found</h4>
-      <a href="{% url 'AddPost' %}" name="AddPost">
-        <button
-          type="submit"
-          class="btn btn-primary btn-md"
-          style="margin-right: 20px"
+    {% else %}
+    <div class="col-sm-12" style="margin-top: 20px">
+        <div class="content text-center">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="72"
+            height="72"
+            viewBox="0 0 24 24"
+            style="fill: rgba(0, 0, 0, 1)"
         >
-          <i class="fa-solid fa-file"></i> Add A Post Now
-        </button>
-      </a>
-      <br />
+            <path
+            d="M19.903 8.586a.997.997 0 0 0-.196-.293l-6-6a.997.997 0 0 0-.293-.196c-.03-.014-.062-.022-.094-.033a.991.991 0 0 0-.259-.051C13.04 2.011 13.021 2 13 2H6c-1.103 0-2 .897-2 2v16c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V9c0-.021-.011-.04-.013-.062a.952.952 0 0 0-.051-.259c-.01-.032-.019-.063-.033-.093zM16.586 8H14V5.414L16.586 8zM6 20V4h6v5a1 1 0 0 0 1 1h5l.002 10H6z"
+            ></path>
+            <path d="M8 12h8v2H8zm0 4h8v2H8zm0-8h2v2H8z"></path>
+        </svg>
+        <br />
+        <h4 class="text-dark py-3">No Associated Posts Found</h4>
+        <a href="{% url 'AddPost' %}" name="AddPost">
+            <button
+            type="submit"
+            class="btn btn-primary btn-md"
+            style="margin-right: 20px"
+            >
+            <i class="fa-solid fa-file"></i> Add A Post Now
+            </button>
+        </a>
+        <br />
+        </div>
     </div>
-  </div>
-  {% endif %}
+    {% endif %}
+   
 
   <br />
 
