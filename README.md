@@ -2,6 +2,16 @@
 
 This is an app that allows you to be in the loop about everything happening in your neighborhood. From contact information of different handyman to meeting announcements or even alerts.
 
+# User Stories
+
+- A user can sign in into the application
+- A user can see and update their profile
+- A user can view, join or leave a neighborhood
+- A user can create posts that will be visible to everyone in the neighborhood
+- A user can find contact information for the health department and the police authority for the specific neighborhood
+- A user can see a list of businesses in the neighborhood
+- A user can post a business
+
 ## Getting started
 
 To get a copy of the project up and running on your local machine for development and testing purposes;
@@ -37,3 +47,12 @@ To get a copy of the project up and running on your local machine for developmen
 
 8. Start development server
    > (venv) $ python3 manage.py runserver
+
+## Known Bugs
+
+Currently there are no known bugs but pull requests are allowed incase you spot any.
+
+## Authors
+
+- Ann Wanjeri
+- Mohammed Lee

@@ -35,14 +35,15 @@ INSTALLED_APPS = [
     # local apps
     'blockapp',
     'bootstrap4',
-    'fontawesomefree',
-    'crispy_forms',
+   
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'material',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'blockproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,10 +84,10 @@ WSGI_APPLICATION = 'blockproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blockwatch',
+        'USER': 'wanjeri',
+        'PASSWORD': 'pass123',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -136,3 +137,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+
+
+LOGOUT_REDIRECT_URL = "login"  
+LOGIN_REDIRECT_URL = 'home' # URL redirecting after a successful authentication
