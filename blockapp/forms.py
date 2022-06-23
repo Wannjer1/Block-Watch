@@ -1,3 +1,5 @@
+from dataclasses import field, fields
+import email
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -5,14 +7,28 @@ from .models import *
 
 
 CATEGORIES = [
-    ('1', 'Crimes and Safety'),
-    ('2', 'Health Emergency'),
-    ('3', 'Recommendations'),
+    ('1', 'Crimes'),
+    ('2', 'Health Issues'),
+    ('3', 'Nyumba Kumi meetups'),
     ('4', 'Fire Breakouts'),
     ('5', 'Lost and Found'),
     ('6', 'Death'),
     ('7', 'Event'),
 ]
+# user creation form
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+
+
+class UserForm(forms.ModelForm):
+        class Meta:        
+            model = User        
+            fields = ['first_name', 'last_name', 'email', ]
 
 # neighbourhood form
 class AddNeighbourhoodForm(forms.ModelForm):

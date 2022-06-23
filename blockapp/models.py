@@ -1,18 +1,18 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 # Create your models here.
 
 CHOICES = [ 
-    ('1', 'Crimes and Safety'),
-    ('2', 'Health Emergency'),
-    ('3', 'Recommendations'),
+    ('1', 'Crimes'),
+    ('2', 'Health'),
+    ('3', 'Nyumba Kumi meetups'),
     ('4', 'Fire Breakouts'),
     ('5', 'Lost and Found'),
     ('6', 'Death'),
     ('7', 'Event'),
 ]
-
 
 
 # neighbourhood model
@@ -45,6 +45,24 @@ class NeighbourHood(models.Model):
         return update
 
     
+# profile model
+class Profile(models.Model):
+    avatar = models.ImageField(upload_to = 'avatar/',max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=255, null=True)
+    bio = models.TextField(blank=True,default='')
+    user = models.OneToOneField(User,related_name='user',on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user.username)
+    
+
+def create_profile(sender, **kwargs):
+    user = kwargs["instance"]
+    if kwargs["created"]:
+        user_profile = Profile(user=user)
+        user_profile.save()
+post_save.connect(create_profile, sender=User)
 
 # post model
 class Post(models.Model):
@@ -55,7 +73,8 @@ class Post(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     post_date = models.DateTimeField(auto_now_add=True, null=True)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null=True)
-    # rememeber to add profile foreign key
+   
+   
 
     def __str__(self):
         return str(self.title)
@@ -72,7 +91,8 @@ class Business(models.Model):
     email = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True, null=True)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE, blank=True, null=True)
-    # REMEMBER TO ADD PROFILE FIELD
+  
+    
 
     def __str__(self):
         return str(self.name)

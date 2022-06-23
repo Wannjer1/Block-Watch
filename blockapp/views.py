@@ -1,15 +1,45 @@
 
 
-from django.shortcuts import render,redirect, get_object_or_404
+from multiprocessing import AuthenticationError
+from django.shortcuts import render,redirect, get_object_or_404, HttpResponseRedirect
 from django.http import HttpResponse
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from .models import *
+from django.views import generic
 from .forms import *
+from django.contrib.auth.views import LoginView  
+from django.core.exceptions import PermissionDenied  
+from django.forms.models import inlineformset_factory
+from django.views import View
+
+
 from django.contrib import messages
 
+
 # Create your views here.
+
+# sign up view
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = 'registration/register.html'
+
+
+class AdminLoginView(LoginView):
+    template_name ='registration/login.html'
+
+
+
 def home(request):
     neighbourhoods = NeighbourHood.objects.all()
     return render(request, 'blockapp/index.html', {'neighbourhoods':neighbourhoods})
+
+
 
 
 # function to add neighbourhood
@@ -47,6 +77,11 @@ def SingleNeighbourhood(request, title):
 
     return render(request, 'blockapp/singleblock.html', {'neighbourhood': neighbourhood, 'businesses':businesses, 'posts':posts})
 
+# function to view users posts 
+def MyPosts(request):
+    posts = Post.objects.all()
+    return render(request, 'blockapp/post.html', {'posts':posts})
+
 # funtion to create a new post
 def new_post(request):
     
@@ -62,7 +97,7 @@ def new_post(request):
             new_post = Post(title = title, neighbourhood = neighbourhood_obj, description = description)
             new_post.save()
 
-            messages.success(request, '✅ Your Post Was Created Successfully!')
+            messages.success(request, ' Your Post Was Created Successfully!')
             return redirect('MyPosts')
 
         else:
@@ -74,10 +109,6 @@ def new_post(request):
     return render(request, 'blockapp/addpost.html', {'form':form})
 
 
-# function to view users posts 
-def MyPosts(request):
-    posts = Post.objects.all()
-    return render(request, 'blockapp/post.html', {'posts':posts})
 
 
 # function to add business
@@ -96,7 +127,7 @@ def AddBusiness(request):
             new_business = Business(name = name, email = email, neighbourhood = neighbourhood_obj, description = description)
             new_business.save()
 
-            messages.success(request, '✅ A Business Was Created Successfully!')
+            messages.success(request, 'A Business Was Created Successfully!')
             return redirect('MyBusinesses')
 
         else:
@@ -126,4 +157,49 @@ def Search(request):
         return render(request, 'blockapp/search.html')
 
 
+# user profile view
+class ProfileView(View):
+    def get(self, request):
+        user = request.user
+        user_profile = get_object_or_404(Profile, user=user)
+        print(user_profile)
+        ctx = {
+            'profile': user_profile
+        }
+        return render(request, 'blockapp/profile.html', ctx)
 
+
+# user profile page
+@login_required() # only logged in users should access this
+def edit_user(request, pk):
+    # querying the User object with pk from url
+    user = User.objects.get(pk=pk)
+
+    # prepopulate UserProfileForm with retrieved user values from above.
+    user_form = UserForm(instance=user)
+
+    # The sorcery begins from here, see explanation https://blog.khophi.co/extending-django-user-model-userprofile-like-a-pro/
+    ProfileInlineFormset = inlineformset_factory(User, Profile, fields=('title', 'bio', 'avatar','neighbourhood'))
+    formset = ProfileInlineFormset(instance=user)
+
+    if request.user.is_authenticated and request.user.id == user.id:
+        if request.method == "POST":
+            user_form = UserForm(request.POST, request.FILES, instance=user)
+            formset = ProfileInlineFormset(request.POST, request.FILES, instance=user)
+
+            if user_form.is_valid():
+                created_user = user_form.save(commit=False)
+                formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
+
+                if formset.is_valid():
+                    created_user.save()
+                    formset.save()
+                    return HttpResponseRedirect('/profile/')
+
+        return render(request, "blockapp/updateProfile.html", {
+            "noodle": pk,
+            "noodle_form": user_form,
+            "formset": formset,
+        })
+    else:
+        raise PermissionDenied
