@@ -43,6 +43,7 @@ def home(request):
 
 
 # function to add neighbourhood
+@login_required
 def AddNeighbourhood(request):
     # remember to link this function to the profile model
     if request.method == 'POST':
@@ -61,6 +62,7 @@ def AddNeighbourhood(request):
     return render(request, 'blockapp/addhood.html', {'form':form})
 
 # function to show users neighbourhood
+@login_required
 def MyNeighbourhoods(request):
 #    remember to link with the profile model
     neighbourhoods = NeighbourHood.objects.all()
@@ -70,6 +72,7 @@ def MyNeighbourhoods(request):
     return render(request, 'blockapp/neighbourhoods.html', {'neighbourhoods':neighbourhoods})
 
 # function to render single/individual blocks
+@login_required
 def SingleNeighbourhood(request, title):
     neighbourhood = get_object_or_404(NeighbourHood, title=title)
     businesses = Business.objects.filter(neighbourhood = neighbourhood.id).all()
@@ -83,6 +86,7 @@ def MyPosts(request):
     return render(request, 'blockapp/post.html', {'posts':posts})
 
 # funtion to create a new post
+@login_required
 def new_post(request):
     
     if request.method == "POST":
@@ -112,6 +116,7 @@ def new_post(request):
 
 
 # function to add business
+@login_required
 def AddBusiness(request):
     # remember to add profile model
     form = BusinessForm()
@@ -147,6 +152,7 @@ def MyBusinesses(request):
     return render(request, 'blockapp/business.html', {'businesses':businesses})
 
 # function to enable users search for posted businesses
+@login_required
 def Search(request):
     if request.method == 'POST':
         search = request.POST['BusinessSearch']
